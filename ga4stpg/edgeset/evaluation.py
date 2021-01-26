@@ -1,7 +1,9 @@
 from ga4stpg.graph.reader import SteinerTreeProblem
 from ga4stpg.graph.disjointsets import DisjointSets
+from ga4stpg.edgeset import EdgeSet
 
 class EvaluateEdgeSet:
+    '''Evaluate an edgeset '''
 
     def __init__(self, stpg : SteinerTreeProblem, penality_function=None) :
         self.STPG = stpg
@@ -15,13 +17,19 @@ class EvaluateEdgeSet:
     def __call__(self, chromosome, **kwargs):
         '''
         Parameters:
-        chromosome : is a EdgeSet type or a Bag
+            chromosome : is a EdgeSet type or a Bag
+
+        Results :
+            _cost : Number
+                the edgeset cost
+            nro_components : int
+                graph components identified
         '''
+        assert isinstance(chromosome, EdgeSet), f"unsupported operation for chromosome type {type(chromosome)}"
+
         disjointset = DisjointSets()
         _cost = 0
         GRAPH = self.STPG.graph
-
-        # assert isinstance(chromosome, EdgeSet)
 
         for v ,u in chromosome:
             if not GRAPH.has_edge(v, u):
@@ -38,5 +46,3 @@ class EvaluateEdgeSet:
         _cost += self.penality_function(nro_components)
 
         return _cost, nro_components
-
-

@@ -102,7 +102,10 @@ class TestEdgeSet(unittest.TestCase):
         raise NotImplementedError()
 
     def test_clear_method(self):
-        items = [ (randint(0, 100), randint(0, 100)) for _ in range(0, 200)]
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = [ (next(A), next(B)) for _ in range(200)]
 
         result = EdgeSet(items)
 

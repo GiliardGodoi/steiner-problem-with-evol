@@ -7,38 +7,43 @@ from ga4stpg.edgeset import UEdge
 class TestUndiretedEdge(unittest.TestCase):
 
     def test_init_with_args(self):
-        tt = (3, 56)
+        with self.subTest("Tuple with two values"):
+            tt = (3, 56)
+            try:
+                UEdge(*tt)
+            except Exception:
+                self.fail(f"faild when trying init with {tt}")
 
-        try:
-            UEdge(*tt)
-        except Exception:
-            self.fail(f"faild when trying init with {tt}")
+        with self.subTest("tuple with two values and weight"):
+            tt = (49, 56)
+            try:
+                UEdge(*tt, weight=3)
+            except Exception:
+                self.fail("faild when trying init with {tt} and weight=3")
 
-        try:
-            UEdge(*tt, weight=3)
-        except Exception:
-            self.fail("faild when trying init with {tt} and weight=3")
+        with self.subTest("Tuple with tree values"):
+            ttt = (34, 90, 10)
+            with self.assertRaises(TypeError):
+                UEdge(*ttt)
 
-        ttt = (34, 90, 10)
-
-        with self.assertRaises(TypeError):
-            UEdge(*ttt)
-
-        with self.assertRaises(TypeError):
-            UEdge(22, 11, 33)
+        with self.subTest("passing tree values"):
+            with self.assertRaises(TypeError):
+                UEdge(22, 11, 33)
 
     def test_init_with_extreme_arguments(self):
+        with self.subTest("init with one positional argument"):
+            with self.assertRaises(TypeError) as context:
+                UEdge(4)
+            self.assertTrue(" missing 1 required positional argument" in str(context.exception))
 
-        with self.assertRaises(TypeError) as context:
-            UEdge(4)
-        self.assertTrue(" missing 1 required positional argument" in str(context.exception))
+        with self.subTest("init with one positional argument and weigth"):
+            with self.assertRaises(TypeError) as context:
+                UEdge(70, weigth=10)
+            self.assertTrue(" missing 1 required positional argument" in str(context.exception))
 
-        with self.assertRaises(TypeError) as context:
-            UEdge(70, weigth=10)
-        self.assertTrue(" missing 1 required positional argument" in str(context.exception))
-
-        with self.assertRaises(TypeError):
-            UEdge((4, 3))
+        with self.subTest("init with one positional argument: a tuple"):
+            with self.assertRaises(TypeError):
+                UEdge((4, 3))
 
     @unittest.skip("list support > operator")
     def test_init_with_list(self):
@@ -62,28 +67,30 @@ class TestUndiretedEdge(unittest.TestCase):
         A = UEdge('T', 'U')
         B = UEdge('U', 'T')
 
-        self.assertTrue(hasattr(A, '__eq__'))
-
-        self.assertFalse(A is B)
-        self.assertTrue(A == B)
-        self.assertFalse(A != B)
+        with self.subTest("edges with character vertice"):
+            self.assertTrue(hasattr(A, '__eq__'))
+            self.assertFalse(A is B)
+            self.assertTrue(A == B)
+            self.assertFalse(A != B)
 
         C = UEdge(4, 9)
         D = UEdge(9, 4)
-        self.assertFalse(C is D)
-        self.assertTrue(C == D)
-        self.assertFalse(C != D)
+        with self.subTest("Edge with number vertices"):
+            self.assertFalse(C is D)
+            self.assertTrue(C == D)
+            self.assertFalse(C != D)
 
         E = UEdge(8, 7)
         F = UEdge(9, 4)
+        with self.subTest("test with they are different"):
+            self.assertFalse(E is F)
+            self.assertFalse(E == F)
+            self.assertTrue(E != F)
 
-        self.assertFalse(E is F)
-        self.assertFalse(E == F)
-        self.assertTrue(E != F)
-
-        self.assertTrue(A != D)
-        self.assertTrue(C != B)
-        self.assertFalse(C != F)
+        with self.subTest("mixing edges types"):
+            self.assertTrue(A != D)
+            self.assertTrue(C != B)
+            self.assertFalse(C != F)
 
     def test_there_is_a_vertice(self):
 
@@ -172,22 +179,22 @@ class TestUndiretedEdge(unittest.TestCase):
 
     def test_weigth_property(self):
 
-        M = UEdge(4, 3, weight=50)
+        with self.subTest("with weight property"):
+            M = UEdge(4, 3, weight=50)
 
-        self.assertTrue(hasattr(M, "_weight"))
-        self.assertTrue(hasattr(M, '__len__'))
-        self.assertTrue(len(M), 50)
+            self.assertTrue(hasattr(M, "_weight"))
+            self.assertTrue(hasattr(M, '__len__'))
+            self.assertTrue(len(M), 50)
 
-        N = UEdge(11, 27)
-        self.assertTrue(hasattr(N, '__len__'))
-        self.assertFalse(hasattr(N, '_weight'))
+        with self.subTest("without weight property"):
+            N = UEdge(11, 27)
+            self.assertTrue(hasattr(N, '__len__'))
+            self.assertFalse(hasattr(N, '_weight'))
 
-        with self.assertRaises(AttributeError) as context:
-            len(N)
+            with self.assertRaises(AttributeError) as context:
+                len(N)
 
-        self.assertTrue('_weight' in str(context.exception))
-
+            self.assertTrue('_weight' in str(context.exception))
 
 if __name__ == '__main__':
     unittest.main()
-

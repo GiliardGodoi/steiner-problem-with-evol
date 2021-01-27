@@ -122,7 +122,6 @@ class TestEdgeSet(unittest.TestCase):
 
         self.assertEqual(total, total_again)
 
-
     def test_len_property(self):
         A = count(0, step=2)
         B = count(1, step=2)
@@ -150,7 +149,20 @@ class TestEdgeSet(unittest.TestCase):
         raise NotImplementedError()
 
     def test_eq_operand(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        obj_1 = EdgeSet((next(A), next(B)) for _ in range(200))
+
+        C = count(398, step=-2)
+        D = count(399, step=-2)
+
+        obj_2 = EdgeSet((next(C), next(D)) for _ in range(200))
+
+        self.assertTrue(obj_2 == obj_1)
+        self.assertTrue(obj_1 == obj_2)
+
+
 
     def test_not_equal_operand(self):
         raise NotImplementedError()

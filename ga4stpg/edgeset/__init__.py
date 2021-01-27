@@ -1,3 +1,4 @@
+from typing import Generator
 
 class GEdge:
     '''General Edge Abrastraction'''
@@ -57,7 +58,7 @@ class EdgeSet:
     def __init__(self,items=None):
         self._edges = set()
 
-        if items and isinstance(items, (list, tuple, set)):
+        if items and isinstance(items, (list, tuple, set, Generator)):
             for item in items:
                 u, v = item
                 self._edges.add(UEdge(v,u))

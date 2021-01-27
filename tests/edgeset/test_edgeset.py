@@ -62,7 +62,24 @@ class TestEdgeSet(unittest.TestCase):
         raise NotImplementedError()
 
     def test_if_is_iterable(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = [ (next(A), next(B)) for _ in range(200)]
+
+        result = EdgeSet(items)
+
+        self.assertTrue(hasattr(result, '__iter__'))
+
+        self.assertIsInstance(iter(result), Iterator)
+
+        total = 0
+
+        for _ in result:
+            total += 1
+
+        self. assertEqual(len(result), total)
+
 
     def test_len_property(self):
         A = count(0, step=2)

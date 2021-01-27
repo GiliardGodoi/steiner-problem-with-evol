@@ -55,8 +55,21 @@ class TestEdgeSet(unittest.TestCase):
     def test_init_with_set_of_edges(self):
         raise NotImplementedError()
 
-    def init_with_edgeset(self):
-        raise NotImplementedError()
+    def test_init_with_edgeset(self):
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = [ (next(A), next(B)) for _ in range(200)]
+
+        result = EdgeSet(items)
+
+        other = EdgeSet(result)
+
+        self.assertFalse(other is result)
+        self.assertFalse(other._edges is result._edges)
+        self.assertEqual(result, other)
+        self.assertEqual(other._edges, result._edges)
+        self.assertEqual(len(result), len(other))
 
     def test_contains(self):
         raise NotImplementedError()

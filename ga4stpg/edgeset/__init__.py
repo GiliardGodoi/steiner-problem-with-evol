@@ -61,6 +61,8 @@ class EdgeSet:
             for item in items:
                 u, v = item
                 self._edges.add(UEdge(v,u))
+        elif items and isinstance(items, self.__class__):
+            self._edges = items._edges.copy()
 
     def __str__(self):
         return f'EdgeSet: <{len(self)}>'

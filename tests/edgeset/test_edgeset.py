@@ -198,8 +198,88 @@ class TestEdgeSet(unittest.TestCase):
 
         self.assertEqual(len(nodes), len(cc))
 
-    def test_add_method(self):
-        raise NotImplementedError()
+    def test_vertices_after_add_a_new_edge(self):
+        items = [
+            (8, 6), (7, 4),(5,3), (2,1),
+            (8, 7), (8, 4), (8, 5), (8, 2)
+        ]
+
+        result = EdgeSet(items)
+        self.assertEqual(len(result), len(items))
+
+        vertices = set([v for v in result.vertices])
+        self.assertEqual(len(vertices), 8)
+
+        result.add(47, 5)
+        result.add(23, 4)
+        vertices_b = set([v for v in result.vertices])
+        self.assertEqual(len(vertices_b), 10)
+        self.assertEqual(len(result), len(items) + 2)
+
+    def test_add_an_edge(self):
+        items = [(8, 9), (7, 4),(5,3), (2,1)]
+        result = EdgeSet(items)
+        edge = UEdge(40, 50)
+
+        self.assertFalse(edge in result)
+        self.assertEqual(len(result), len(items))
+
+        result.add(edge)
+
+        self.assertTrue(edge in result)
+        self.assertEqual(len(result), len(items) + 1)
+
+    def test_add_an_edge_as_args(self):
+        items = [ (8, 9), (7, 4),(5,3), (2,1)]
+        result = EdgeSet(items)
+        edge = UEdge(40, 50)
+
+        self.assertFalse(edge in result)
+        self.assertEqual(len(result), len(items))
+
+        result.add(50, 40)
+
+        self.assertTrue(edge in result)
+        self.assertEqual(len(result), len(items) + 1)
+
+    def test_add_an_edge_as_list(self):
+        items = [ (8, 9), (7, 4),(5,3), (2,1)]
+        result = EdgeSet(items)
+        edge = UEdge(40, 50)
+
+        self.assertFalse(edge in result)
+        self.assertEqual(len(result), len(items))
+
+        result.add([50, 40])
+
+        self.assertTrue(edge in result)
+        self.assertEqual(len(result), len(items) + 1)
+
+    def test_add_an_edge_as_tuple(self):
+        items = [ (8, 9), (7, 4),(5,3), (2,1)]
+        result = EdgeSet(items)
+        edge = UEdge(40, 50)
+
+        self.assertFalse(edge in result)
+        self.assertEqual(len(result), len(items))
+
+        result.add((50, 40))
+
+        self.assertTrue(edge in result)
+        self.assertEqual(len(result), len(items) + 1)
+
+    def test_add_an_edge_as_set(self):
+        items = [ (8, 9), (7, 4),(5,3), (2,1)]
+        result = EdgeSet(items)
+        edge = UEdge(40, 50)
+
+        self.assertFalse(edge in result)
+        self.assertEqual(len(result), len(items))
+
+        result.add({40, 50})
+
+        self.assertTrue(edge in result)
+        self.assertEqual(len(result), len(items) + 1)
 
     def test_discard_method(self):
         raise NotImplementedError()

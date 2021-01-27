@@ -142,10 +142,31 @@ class EdgeSet:
                     done.add(vertice)
                     yield vertice
 
-    def add(self, edge):
-        if not isinstance(edge, UEdge):
-            u, v = edge
-            edge = UEdge(u, v)
+    def add(self, *args):
+        u, v = None, None
+
+        if len(args) == 1:
+            item = args[0]
+        elif len(args) == 2:
+            u, v = args
+            item = UEdge(u, v)
+        else:
+            item = None
+
+        if isinstance(item, UEdge):
+            self._edges.add(item)
+            return
+        elif isinstance(item, (list, tuple)) and len(item) == 2 :
+            u, v = item
+        elif isinstance(item, list) and len(item) == 1 and len(item[0]) == 2:
+            u, v = item[0]
+        elif isinstance(item, set) and len(item) == 2:
+            u = item.pop()
+            v = item.pop()
+        else:
+            raise ValueError(f"could not understand input f{item}")
+
+        edge = UEdge(u, v)
 
         self._edges.add(edge)
 

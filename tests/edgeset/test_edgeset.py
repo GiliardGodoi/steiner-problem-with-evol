@@ -84,7 +84,18 @@ class TestEdgeSet(unittest.TestCase):
         self.assertEqual(len(result), len(other))
 
     def test_contains(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = [ (next(A), next(B)) for _ in range(200)]
+        result = EdgeSet(items)
+
+        self.assertTrue(hasattr(result, "__contains__"))
+        self.assertTrue(UEdge(8, 9) in result)
+        self.assertTrue(UEdge(9, 8) in result)
+
+        self.assertFalse(UEdge(8, 7) in result)
+        self.assertFalse(UEdge(7, 8) in result)
 
     def test_if_is_iterable(self):
         A = count(0, step=2)

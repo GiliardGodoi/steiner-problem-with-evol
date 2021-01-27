@@ -1,3 +1,4 @@
+from random import randint
 import unittest
 from typing import Generator, Iterator
 
@@ -92,7 +93,29 @@ class TestEdgeSet(unittest.TestCase):
         raise NotImplementedError()
 
     def test_copy_method(self):
-        raise NotImplementedError()
+        items = ((randint(0, 100), randint(0, 100)) for _ in range(200))
+
+        result = EdgeSet(items)
+
+        copied = result.copy()
+
+        with self.subTest("test instance returned"):
+            self.assertIsInstance(copied, EdgeSet)
+
+        with self.subTest("have they same lenght?"):
+            self.assertEqual(len(result), len(copied))
+
+        with self.subTest("are they equal?"):
+            self.assertTrue(result == copied)
+            self.assertTrue(copied == result)
+
+        with self.subTest("are they the same?"):
+            self.assertFalse(copied is result)
+            self.assertFalse(result is copied)
+
+        with self.subTest("have they the same edges?"):
+            self.assertEqual(result._edges, copied._edges)
+
 
 
 if __name__ == '__main__':

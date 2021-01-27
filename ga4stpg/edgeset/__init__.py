@@ -142,32 +142,27 @@ class EdgeSet:
                     done.add(vertice)
                     yield vertice
 
-    def add(self, *args):
+    def __check_args(self, params):
         u, v = None, None
+        if isinstance(params, (list, tuple)) and len(params) == 1:
+            params = params[0]
+        elif isinstance(params, (list, tuple)) and len(params) > 2:
+            raise ValueError(f"could not understand input f{params}")
 
-        if len(args) == 1:
-            item = args[0]
-        elif len(args) == 2:
-            u, v = args
-            item = UEdge(u, v)
+        if isinstance(params, UEdge):
+            return params
+        elif isinstance(params, (list, tuple)) and len(params) == 2 :
+            u, v = params
+        elif isinstance(params, set) and len(params) == 2:
+            u = params.pop()
+            v = params.pop()
         else:
-            item = None
+            raise ValueError(f"could not understand input f{params}")
 
-        if isinstance(item, UEdge):
-            self._edges.add(item)
-            return
-        elif isinstance(item, (list, tuple)) and len(item) == 2 :
-            u, v = item
-        elif isinstance(item, list) and len(item) == 1 and len(item[0]) == 2:
-            u, v = item[0]
-        elif isinstance(item, set) and len(item) == 2:
-            u = item.pop()
-            v = item.pop()
-        else:
-            raise ValueError(f"could not understand input f{item}")
+        return UEdge(u, v)
 
-        edge = UEdge(u, v)
-
+    def add(self, *args):
+        edge = self.__check_args(args)
         self._edges.add(edge)
 
     def discard(self, edge):

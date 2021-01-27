@@ -173,4 +173,6 @@ class EdgeSet:
         self._edges.clear()
 
     def copy(self):
-        return self._edges.copy()
+        result = EdgeSet()
+        result._edges = self._edges.copy()
+        return result

@@ -1,4 +1,5 @@
 from random import randint
+from itertools import count
 import unittest
 from typing import Generator, Iterator
 
@@ -39,7 +40,18 @@ class TestEdgeSet(unittest.TestCase):
         raise NotImplementedError()
 
     def test_len_property(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = [ (next(A), next(B)) for _ in range(200)]
+
+        result = EdgeSet(items)
+
+        with self.subTest("How many edges?"):
+            self.assertEqual(len(result), 200)
+
+        with self.subTest("How many edges? len(items)"):
+            self.assertEqual(len(result), len(items))
 
     def test_sub_operand(self):
         raise NotImplementedError()
@@ -90,10 +102,27 @@ class TestEdgeSet(unittest.TestCase):
         raise NotImplementedError()
 
     def test_clear_method(self):
-        raise NotImplementedError()
+        items = [ (randint(0, 100), randint(0, 100)) for _ in range(0, 200)]
+
+        result = EdgeSet(items)
+
+        with self.subTest("Has it elements?"):
+            self.assertTrue(result)
+            self.assertTrue(len(result))
+            self.assertEqual(len(result), 200)
+
+        result.clear()
+
+        with self.subTest("There isn't elements anymore."):
+            self.assertFalse(result)
+            self.assertFalse(len(result))
+            self.assertEqual(len(result), 0)
 
     def test_copy_method(self):
-        items = ((randint(0, 100), randint(0, 100)) for _ in range(200))
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = [ (next(A), next(B)) for _ in range(200)]
 
         result = EdgeSet(items)
 

@@ -168,9 +168,32 @@ class TestEdgeSet(unittest.TestCase):
         self.assertTrue(obj_2 == obj_1)
         self.assertTrue(obj_1 == obj_2)
 
-    @unittest.skip("not implemented")
+        E = count(400, step=2)
+        F = count(401, step=2)
+        obj_3 = EdgeSet((next(E), next(F)) for _ in range(200))
+        self.assertFalse(obj_1 == obj_3)
+        self.assertFalse(obj_3 == obj_1)
+
     def test_not_equal_operand(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        obj_1 = EdgeSet((next(A), next(B)) for _ in range(200))
+
+        C = count(398, step=-2)
+        D = count(399, step=-2)
+
+        obj_2 = EdgeSet((next(C), next(D)) for _ in range(200))
+
+        self.assertFalse(obj_2 != obj_1)
+        self.assertFalse(obj_1 != obj_2)
+
+        E = count(400, step=2)
+        F = count(401, step=2)
+        obj_3 = EdgeSet((next(E), next(F)) for _ in range(200))
+        self.assertTrue(obj_1 != obj_3)
+        self.assertTrue(obj_3 != obj_1)
+
 
     @unittest.skip("not implemented")
     def test_less_than_operand(self):

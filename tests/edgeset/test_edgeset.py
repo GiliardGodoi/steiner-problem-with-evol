@@ -292,9 +292,38 @@ class TestEdgeSet(unittest.TestCase):
         self.assertTrue(edge in result)
         self.assertEqual(len(result), len(items) + 1)
 
-    @unittest.skip("not implemented")
     def test_discard_method(self):
-        raise NotImplementedError()
+        items = [
+            (8, 6), (7, 4), (5,3), (2, 1),
+            (8, 7), (8, 4), (8, 5), (8, 2)
+        ]
+
+        result = EdgeSet(items)
+        self.assertEqual(len(result), len(items))
+
+        with self.subTest("without exception: tuple"):
+            result.discard((5, 8))
+            self.assertEqual(len(result), len(items) - 1)
+
+        with self.subTest("without exception: args"):
+            result.discard(2, 1)
+            self.assertEqual(len(result), len(items) - 2)
+
+        with self.subTest("without exception: list"):
+            result.discard([4, 7])
+            self.assertEqual(len(result), len(items) - 3)
+
+        with self.subTest("without exception: list"):
+            result.discard(UEdge(7, 8))
+            self.assertEqual(len(result), len(items) - 4)
+
+        with self.subTest("without exception: alredy taken"):
+            result.discard(UEdge(7, 8))
+            self.assertEqual(len(result), len(items) - 4)
+
+        with self.subTest("without exception: non exists previously"):
+            result.discard(UEdge(7, 8))
+            self.assertEqual(len(result), len(items) - 4)
 
     def test_remove_method(self):
         items = [

@@ -116,6 +116,12 @@ class TestEdgeSet(unittest.TestCase):
 
         self. assertEqual(len(result), total)
 
+        total_again = 0
+        for _ in result:
+            total_again += 1
+
+        self.assertEqual(total, total_again)
+
 
     def test_len_property(self):
         A = count(0, step=2)

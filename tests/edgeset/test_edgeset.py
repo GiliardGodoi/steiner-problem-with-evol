@@ -298,7 +298,7 @@ class TestEdgeSet(unittest.TestCase):
 
     def test_remove_method(self):
         items = [
-            (8, 6), (7, 4),(5,3), (2,1),
+            (8, 6), (7, 4), (5,3), (2, 1),
             (8, 7), (8, 4), (8, 5), (8, 2)
         ]
 
@@ -307,10 +307,27 @@ class TestEdgeSet(unittest.TestCase):
 
         with self.subTest("without exception: tuple"):
             result.remove((5, 8))
+            self.assertEqual(len(result), len(items) - 1)
+
+        with self.subTest("without exception: args"):
+            result.remove(2, 1)
+            self.assertEqual(len(result), len(items) - 2)
+
+        with self.subTest("without exception: list"):
+            result.remove([4, 7])
+            self.assertEqual(len(result), len(items) - 3)
+
+        with self.subTest("without exception: list"):
+            result.remove(UEdge(7, 8))
+            self.assertEqual(len(result), len(items) - 4)
 
         with self.subTest("with exception"):
             with self.assertRaises(KeyError):
                 result.remove((101, 105))
+
+        with self.subTest("with exception: alredy removed"):
+            with self.assertRaises(KeyError):
+                result.remove((8, 5))
 
     @unittest.skip("not implemented")
     def test_issubset_method(self):

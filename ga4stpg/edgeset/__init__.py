@@ -165,16 +165,12 @@ class EdgeSet:
         edge = self.__check_args(args)
         self._edges.add(edge)
 
-    def discard(self, edge):
-        if not isinstance(edge, UEdge):
-            u, v = edge
-            edge = UEdge(u, v)
+    def discard(self, *args):
+        edge = self.__check_args(args)
         self._edges.discard(edge)
 
-    def remove(self, edge):
-        if not isinstance(edge, UEdge):
-            u, v = edge
-            edge = UEdge(u, v)
+    def remove(self, *args):
+        edge = self.__check_args(args)
         self._edges.remove(edge)
 
     def issubset(self, other):

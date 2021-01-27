@@ -19,7 +19,19 @@ class TestEdgeSet(unittest.TestCase):
         raise NotImplementedError()
 
     def test_init_with_tuple_of_tuples(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = tuple((next(A), next(B)) for _ in range(200))
+
+        self.assertIsInstance(items, tuple)
+        self.assertTrue(all(isinstance(item, tuple) for item in items))
+
+        result = EdgeSet(items)
+
+        self.assertIsInstance(result, EdgeSet)
+        self.assertEqual(len(result), 200)
+        self.assertIsInstance(result._edges, set)
 
     def test_init_with_tuple_of_edges(self):
         raise NotImplementedError()

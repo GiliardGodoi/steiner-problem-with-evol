@@ -27,6 +27,7 @@ class TestEdgeSet(unittest.TestCase):
         self.assertEqual(len(result), 200)
         self.assertIsInstance(result._edges, set)
 
+    @unittest.skip("not implemented")
     def test_init_with_list_of_edges(self):
         raise NotImplementedError()
 
@@ -45,6 +46,7 @@ class TestEdgeSet(unittest.TestCase):
         self.assertEqual(len(result), 200)
         self.assertIsInstance(result._edges, set)
 
+    @unittest.skip("not implemented")
     def test_init_with_tuple_of_edges(self):
         raise NotImplementedError()
 
@@ -63,7 +65,7 @@ class TestEdgeSet(unittest.TestCase):
         self.assertEqual(len(result), 200)
         self.assertIsInstance(result._edges, set)
 
-
+    @unittest.skip("not implemented")
     def test_init_with_set_of_edges(self):
         raise NotImplementedError()
 
@@ -136,15 +138,19 @@ class TestEdgeSet(unittest.TestCase):
         with self.subTest("How many edges? len(items)"):
             self.assertEqual(len(result), len(items))
 
+    @unittest.skip("not implemented")
     def test_sub_operand(self):
         raise NotImplementedError()
 
+    @unittest.skip("not implemented")
     def test_and_operand(self):
         raise NotImplementedError()
 
+    @unittest.skip("not implemented")
     def test_xor_operand(self):
         raise NotImplementedError()
 
+    @unittest.skip("not implemented")
     def test_or_operand(self):
         raise NotImplementedError()
 
@@ -162,18 +168,23 @@ class TestEdgeSet(unittest.TestCase):
         self.assertTrue(obj_2 == obj_1)
         self.assertTrue(obj_1 == obj_2)
 
+    @unittest.skip("not implemented")
     def test_not_equal_operand(self):
         raise NotImplementedError()
 
+    @unittest.skip("not implemented")
     def test_less_than_operand(self):
         raise NotImplementedError()
 
+    @unittest.skip("not implemented")
     def test_greater_than_operand(self):
         raise NotImplementedError()
 
+    @unittest.skip("not implemented")
     def test_greater_or_equal_opearand(self):
         raise NotImplementedError()
 
+    @unittest.skip("not implemented")
     def test_less_or_equal_operand(self):
         raise NotImplementedError()
 
@@ -281,15 +292,31 @@ class TestEdgeSet(unittest.TestCase):
         self.assertTrue(edge in result)
         self.assertEqual(len(result), len(items) + 1)
 
+    @unittest.skip("not implemented")
     def test_discard_method(self):
         raise NotImplementedError()
 
     def test_remove_method(self):
-        raise NotImplementedError()
+        items = [
+            (8, 6), (7, 4),(5,3), (2,1),
+            (8, 7), (8, 4), (8, 5), (8, 2)
+        ]
 
+        result = EdgeSet(items)
+        self.assertEqual(len(result), len(items))
+
+        with self.subTest("without exception: tuple"):
+            result.remove((5, 8))
+
+        with self.subTest("with exception"):
+            with self.assertRaises(KeyError):
+                result.remove((101, 105))
+
+    @unittest.skip("not implemented")
     def test_issubset_method(self):
         raise NotImplementedError()
 
+    @unittest.skip("not implemented")
     def test_issuperset_method(self):
         raise NotImplementedError()
 

@@ -198,8 +198,8 @@ class UndirectedWeightedGraph:
             for v in adjacents.keys():
                 self.__edges[v].pop(w)
 
-    def adjacent_to(self, v : 'vertice', lazzy = True):
-        if lazzy:
+    def adjacent_to(self, v : 'vertice', lazy = True):
+        if lazy:
             return iter(self.__edges.get(v, dict()).keys())
         else :
             return set(self.__edges.get(v, dict()).keys())
@@ -298,8 +298,8 @@ class SpecialGraph:
             for v in adjacents.keys():
                 self.__edges[v].pop(w)
 
-    def adjacent_to(self, v : 'vertice', lazzy = True):
-        if lazzy:
+    def adjacent_to(self, v : 'vertice', lazy = True):
+        if lazy:
             return iter(self.__edges.get(v, dict()).keys())
         else :
             return set(self.__edges.get(v, dict()).keys())

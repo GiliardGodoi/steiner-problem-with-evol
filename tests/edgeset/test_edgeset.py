@@ -231,9 +231,37 @@ class TestEdgeSet(unittest.TestCase):
     def test_xor_operand(self):
         raise NotImplementedError()
 
-    @unittest.skip("not implemented")
     def test_or_operand(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        one = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+        self.assertEqual(len(one), 200)
+
+        self.assertTrue(hasattr(one, "__or__"))
+
+        C = count(200, step=2)
+        D = count(201, step=2)
+
+        two = EdgeSet(UEdge(next(C), next(D)) for _ in range(200))
+        self.assertEqual(len(two), 200)
+
+        three = one | two
+
+        self.assertIsInstance(three, EdgeSet)
+        self.assertEqual(len(three), 300)
+
+        four = two | one
+        self.assertEqual(len(four), len(three))
+
+        self.assertEqual(three, four)
+
+        E = count(0, step=2)
+        F = count(1, step=2)
+
+        five = EdgeSet(UEdge(next(E), next(F)) for _ in range(300))
+        self.assertEqual(three, five)
+        self.assertEqual(four, five)
 
     def test_eq_operand(self):
         A = count(0, step=2)
@@ -261,7 +289,7 @@ class TestEdgeSet(unittest.TestCase):
         B = count(1, step=2)
 
         obj_1 = EdgeSet((next(A), next(B)) for _ in range(200))
-        self.assertTrue(hasattr(obj_1, '__neq__'))
+        self.assertTrue(hasattr(obj_1, '__ne__'))
 
         C = count(398, step=-2)
         D = count(399, step=-2)

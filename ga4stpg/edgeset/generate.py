@@ -1,10 +1,29 @@
 from ga4stpg.edgeset import EdgeSet, UEdge
 from ga4stpg.graph import SteinerTreeProblem
 from ga4stpg.graph.disjointsets import DisjointSets
-from random import randint, sample
+from random import shuffle, sample
 
 def gen_random_kruskal(stpg : SteinerTreeProblem):
-    pass
+
+    terminals = set(stpg.terminals)
+    edges = [(u, v) for u, v in stpg.graph.gen_undirect_edges()]
+    shuffle(edges)
+
+    done = DisjointSets()
+    for v in stpg.graph.vertices:
+        done.make_set(v)
+
+    result = EdgeSet()
+
+    while edges and terminals:
+        y, z = edges.pop()
+        if done.find(y) != done.find(z):
+            result.add(y, z)
+            done.union(y, z)
+            terminals.discard(y)
+            terminals.discard(z)
+
+    return result
 
 def gen_random_prim(stpg : SteinerTreeProblem):
 

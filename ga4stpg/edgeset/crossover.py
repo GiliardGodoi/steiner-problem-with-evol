@@ -40,7 +40,7 @@ class CrossoverPrimRST:
                 result.add(v, w)
                 terminals.discard(w)
                 for u in subgraph.adjacent_to(w):
-                    if u not in done: edges.add(w, u)
+                    if u not in done: edges.add((w, u))
             edges.discard((v, w))
 
         return result

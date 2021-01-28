@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, sample
 from itertools import count
 import unittest
 from typing import Generator, Iterator
@@ -600,6 +600,17 @@ class TestEdgeSet(unittest.TestCase):
 
         with self.subTest("have they the same edges?"):
             self.assertEqual(result._edges, copied._edges)
+
+    def test_apply_random_sample(self):
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = list((next(A), next(B)) for _ in range(200))
+        obj = EdgeSet(items)
+
+        result = sample(list(obj), k=10)
+
+        self.assertEqual(len(result), 10)
 
 
 if __name__ == '__main__':

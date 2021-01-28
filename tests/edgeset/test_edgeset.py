@@ -179,9 +179,28 @@ class TestEdgeSet(unittest.TestCase):
     def test_sub_operand(self):
         raise NotImplementedError()
 
-    @unittest.skip("not implemented")
     def test_and_operand(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        one = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+        self.assertEqual(len(one), 200)
+
+        C = count(200, step=2)
+        D = count(201, step=2)
+
+        two = EdgeSet(UEdge(next(C), next(D)) for _ in range(200))
+        self.assertEqual(len(two), 200)
+
+        three = one & two
+
+        self.assertIsInstance(three, EdgeSet)
+        self.assertEqual(len(three), 100)
+
+        four = two & one
+        self.assertEqual(len(four), len(three))
+
+        self.assertEqual(three, four)
 
     @unittest.skip("not implemented")
     def test_xor_operand(self):

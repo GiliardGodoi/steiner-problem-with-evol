@@ -43,7 +43,6 @@ class TestEdgeSet(unittest.TestCase):
         self.assertIsInstance(result._edges, set)
         self.assertTrue(all(isinstance(edge, UEdge) for edge in result))
 
-
     def test_init_with_tuple_of_tuples(self):
         A = count(0, step=2)
         B = count(1, step=2)
@@ -175,9 +174,32 @@ class TestEdgeSet(unittest.TestCase):
         with self.subTest("How many edges? len(items)"):
             self.assertEqual(len(result), len(items))
 
-    @unittest.skip("not implemented")
     def test_sub_operand(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        one = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+        self.assertEqual(len(one), 200)
+
+        self.assertTrue(hasattr(one, "__sub__"))
+
+        C = count(200, step=2)
+        D = count(201, step=2)
+
+        two = EdgeSet(UEdge(next(C), next(D)) for _ in range(200))
+        self.assertEqual(len(two), 200)
+
+        three = one - two
+
+        self.assertIsInstance(three, EdgeSet)
+        self.assertEqual(len(three), 100)
+
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        three_expected = EdgeSet(UEdge(next(A), next(B)) for _ in range(100))
+
+        self.assertEqual(three, three_expected)
 
     def test_and_operand(self):
         A = count(0, step=2)
@@ -185,6 +207,8 @@ class TestEdgeSet(unittest.TestCase):
 
         one = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
         self.assertEqual(len(one), 200)
+
+        self.assertTrue(hasattr(one, "__and__"))
 
         C = count(200, step=2)
         D = count(201, step=2)
@@ -491,7 +515,6 @@ class TestEdgeSet(unittest.TestCase):
 
         with self.subTest("have they the same edges?"):
             self.assertEqual(result._edges, copied._edges)
-
 
 
 if __name__ == '__main__':

@@ -55,4 +55,20 @@ def gen_random_prim(stpg : SteinerTreeProblem):
     return result
 
 def gen_random_walk(stpg : SteinerTreeProblem):
-    pass
+
+    graph = stpg.graph
+    terminals = set(stpg.terminals)
+    result = EdgeSet()
+    done = set()
+
+    v = terminals.pop()
+    while terminals:
+        done.add(v)
+        adjacents = graph.adjacent_to(v, lazy=False)
+        u = sample(adjacents, k=1)[0]
+        if u not in done:
+            result.add(v, u)
+        terminals.discard(u)
+        v = u
+
+    return result

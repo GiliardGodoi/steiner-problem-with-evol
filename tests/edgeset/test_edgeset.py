@@ -167,6 +167,7 @@ class TestEdgeSet(unittest.TestCase):
         items = [ (next(A), next(B)) for _ in range(200)]
 
         result = EdgeSet(items)
+        self.assertTrue(hasattr(result, '__len__'))
 
         with self.subTest("How many edges?"):
             self.assertEqual(len(result), 200)
@@ -239,6 +240,7 @@ class TestEdgeSet(unittest.TestCase):
         B = count(1, step=2)
 
         obj_1 = EdgeSet((next(A), next(B)) for _ in range(200))
+        self.assertTrue(hasattr(obj_1, '__eq__'))
 
         C = count(398, step=-2)
         D = count(399, step=-2)
@@ -259,6 +261,7 @@ class TestEdgeSet(unittest.TestCase):
         B = count(1, step=2)
 
         obj_1 = EdgeSet((next(A), next(B)) for _ in range(200))
+        self.assertTrue(hasattr(obj_1, '__neq__'))
 
         C = count(398, step=-2)
         D = count(399, step=-2)
@@ -273,7 +276,6 @@ class TestEdgeSet(unittest.TestCase):
         obj_3 = EdgeSet((next(E), next(F)) for _ in range(200))
         self.assertTrue(obj_1 != obj_3)
         self.assertTrue(obj_3 != obj_1)
-
 
     @unittest.skip("not implemented")
     def test_less_than_operand(self):
@@ -320,6 +322,7 @@ class TestEdgeSet(unittest.TestCase):
 
         result = EdgeSet(items)
         self.assertEqual(len(result), len(items))
+        self.assertTrue(hasattr(result, 'vertices'))
 
         vertices = set([v for v in result.vertices])
         self.assertEqual(len(vertices), 8)
@@ -337,6 +340,7 @@ class TestEdgeSet(unittest.TestCase):
 
         self.assertFalse(edge in result)
         self.assertEqual(len(result), len(items))
+        self.assertTrue(hasattr(result, 'add'))
 
         result.add(edge)
 
@@ -346,6 +350,8 @@ class TestEdgeSet(unittest.TestCase):
     def test_add_an_edge_as_args(self):
         items = [ (8, 9), (7, 4),(5,3), (2,1)]
         result = EdgeSet(items)
+        self.assertTrue(hasattr(result, 'add'))
+
         edge = UEdge(40, 50)
 
         self.assertFalse(edge in result)
@@ -359,6 +365,8 @@ class TestEdgeSet(unittest.TestCase):
     def test_add_an_edge_as_list(self):
         items = [ (8, 9), (7, 4),(5,3), (2,1)]
         result = EdgeSet(items)
+        self.assertTrue(hasattr(result, 'add'))
+
         edge = UEdge(40, 50)
 
         self.assertFalse(edge in result)
@@ -372,6 +380,8 @@ class TestEdgeSet(unittest.TestCase):
     def test_add_an_edge_as_tuple(self):
         items = [ (8, 9), (7, 4),(5,3), (2,1)]
         result = EdgeSet(items)
+        self.assertTrue(hasattr(result, 'add'))
+
         edge = UEdge(40, 50)
 
         self.assertFalse(edge in result)
@@ -385,6 +395,8 @@ class TestEdgeSet(unittest.TestCase):
     def test_add_an_edge_as_set(self):
         items = [ (8, 9), (7, 4),(5,3), (2,1)]
         result = EdgeSet(items)
+        self.assertTrue(hasattr(result, 'add'))
+
         edge = UEdge(40, 50)
 
         self.assertFalse(edge in result)
@@ -403,6 +415,7 @@ class TestEdgeSet(unittest.TestCase):
 
         result = EdgeSet(items)
         self.assertEqual(len(result), len(items))
+        self.assertTrue(hasattr(result, 'discard'))
 
         with self.subTest("without exception: tuple"):
             result.discard((5, 8))
@@ -436,6 +449,7 @@ class TestEdgeSet(unittest.TestCase):
 
         result = EdgeSet(items)
         self.assertEqual(len(result), len(items))
+        self.assertTrue(hasattr(result, 'remove'))
 
         with self.subTest("without exception: tuple"):
             result.remove((5, 8))
@@ -476,6 +490,7 @@ class TestEdgeSet(unittest.TestCase):
         items = [ (next(A), next(B)) for _ in range(200)]
 
         result = EdgeSet(items)
+        self.assertTrue(hasattr(result, 'clear'))
 
         with self.subTest("Has it elements?"):
             self.assertTrue(result)
@@ -496,6 +511,7 @@ class TestEdgeSet(unittest.TestCase):
         items = [ (next(A), next(B)) for _ in range(200)]
 
         result = EdgeSet(items)
+        self.assertTrue(hasattr(result, 'copy'))
 
         copied = result.copy()
 

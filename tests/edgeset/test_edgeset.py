@@ -27,9 +27,22 @@ class TestEdgeSet(unittest.TestCase):
         self.assertEqual(len(result), 200)
         self.assertIsInstance(result._edges, set)
 
-    @unittest.skip("not implemented")
     def test_init_with_list_of_edges(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        items = list(UEdge(next(A), next(B)) for _ in range(200))
+
+        self.assertIsInstance(items, list)
+        self.assertTrue(all(isinstance(item, UEdge) for item in items))
+
+        result = EdgeSet(items)
+
+        self.assertIsInstance(result, EdgeSet)
+        self.assertEqual(len(result), 200)
+        self.assertIsInstance(result._edges, set)
+        self.assertTrue(all(isinstance(edge, UEdge) for edge in result))
+
 
     def test_init_with_tuple_of_tuples(self):
         A = count(0, step=2)

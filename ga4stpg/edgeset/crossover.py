@@ -73,3 +73,38 @@ class CrossoverKruskalRST:
                 terminals.discard(edge[1])
 
         return result
+
+
+class CrossoverRandomWalkRST:
+
+    def __init__(self, stpg):
+        self.stpg = stpg
+
+    def __call__(self, parent_a, parent_b):
+        assert isinstance(parent_a, EdgeSet), f'parent_a has to be EdgeSet type. Give was {type(parent_a)}'
+        assert isinstance(parent_b, EdgeSet), f'parent_b has to be EdgeSet type. Give was {type(parent_b)}'
+        stpg = self.stpg
+        terminals = set(stpg.terminals)
+
+        subgraph = UGraph()
+        for edge in parent_a:
+            u, v = edge
+            subgraph.add_edge(u, v)
+        for edge in parent_b:
+            u, v = edge
+            subgraph.add_edge(u, v)
+
+        done   = set()
+        result = EdgeSet()
+
+        v = terminals.pop()
+        while terminals:
+            done.add(v)
+            adjacents = subgraph.adjacent_to(v, lazy=False)
+            u = sample(adjacents, k=1)[0]
+            if u not in done:
+                result.add(v, u)
+            terminals.discard(u)
+            v = u
+
+        return result

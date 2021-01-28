@@ -87,8 +87,8 @@ class UndirectedGraph:
             for v in adjacents:
                 self.__edges[v].remove(w)
 
-    def adjacent_to(self, v : 'vertice', lazzy = True):
-        if lazzy :
+    def adjacent_to(self, v : 'vertice', lazy = True):
+        if lazy :
             return iter(self.get(v))
         else :
             return set(self.get(v))

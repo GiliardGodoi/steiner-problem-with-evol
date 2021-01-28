@@ -224,12 +224,52 @@ class TestEdgeSet(unittest.TestCase):
 
         four = two & one
         self.assertEqual(len(four), len(three))
+        self.assertIsInstance(four, EdgeSet)
 
         self.assertEqual(three, four)
 
-    @unittest.skip("not implemented")
     def test_xor_operand(self):
-        raise NotImplementedError()
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        one = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+        self.assertEqual(len(one), 200)
+
+        self.assertTrue(hasattr(one, "__xor__"))
+
+        C = count(200, step=2)
+        D = count(201, step=2)
+
+        two = EdgeSet(UEdge(next(C), next(D)) for _ in range(200))
+        self.assertEqual(len(two), 200)
+
+        three = one ^ two
+
+        self.assertIsInstance(three, EdgeSet)
+        self.assertEqual(len(three), 200)
+
+        four = two ^ one
+        self.assertEqual(three, four)
+        self.assertIsInstance(four, EdgeSet)
+
+        E = count(0, step=2)
+        F = count(1, step=2)
+
+        five  = EdgeSet(UEdge(next(E), next(F)) for _ in range(100))
+        six   = EdgeSet((next(E), next(F)) for _ in range(100))
+        items = [(next(E), next(F)) for _ in range(100)]
+        for item in items:
+            five.add(item)
+
+        self.assertEqual(len(five), 200)
+
+        self.assertEqual(three, five)
+        self.assertEqual(four, five)
+
+        seven = six & five
+        self.assertEqual(len(seven), 0)
+        self.assertFalse(seven)
+        self.assertIsInstance(seven, EdgeSet)
 
     def test_or_operand(self):
         A = count(0, step=2)
@@ -253,6 +293,7 @@ class TestEdgeSet(unittest.TestCase):
 
         four = two | one
         self.assertEqual(len(four), len(three))
+        self.assertIsInstance(four, EdgeSet)
 
         self.assertEqual(three, four)
 

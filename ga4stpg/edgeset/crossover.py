@@ -59,18 +59,21 @@ class CrossoverKruskalRST:
 
         edges = parent_a | parent_b
         done = DisjointSets()
-        for v in edges.vertices:
+        for v in terminals:
             done.make_set(v)
 
         edges = list(edges)
         result = EdgeSet()
-        while edges and terminals:
+        while edges and len(done.get_disjoint_sets()) > 1:
             edge = edges.pop()
-            if done.find(edge[0]) != done.find(edge[1]):
+            y, z = edge[0], edge[1]
+            if y not in done: done.make_set(y)
+            if z not in done: done.make_set(z)
+            if done.find(y) != done.find(z):
                 result.add(edge)
-                done.union(edge[0], edge[1])
-                terminals.discard(edge[0])
-                terminals.discard(edge[1])
+                done.union(y, z)
+                terminals.discard(y)
+                terminals.discard(z)
 
         return result
 

@@ -10,13 +10,16 @@ def gen_random_kruskal(stpg : SteinerTreeProblem):
     shuffle(edges)
 
     done = DisjointSets()
-    for v in stpg.graph.vertices:
+    for v in terminals:
         done.make_set(v)
 
     result = EdgeSet()
 
-    while edges and terminals:
-        y, z = edges.pop()
+    while edges and len(done.get_disjoint_sets()) > 1:
+        edge = edges.pop()
+        y, z = edge[0], edge[1]
+        if y not in done: done.make_set(y)
+        if z not in done: done.make_set(z)
         if done.find(y) != done.find(z):
             result.add(y, z)
             done.union(y, z)

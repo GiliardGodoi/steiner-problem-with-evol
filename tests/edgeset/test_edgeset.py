@@ -1,4 +1,4 @@
-from random import randint, sample
+from random import choice, choices, sample
 from itertools import count
 import unittest
 from typing import Generator, Iterator
@@ -633,6 +633,31 @@ class TestEdgeSet(unittest.TestCase):
 
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 200)
+
+    def test_if_choice_works(self):
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        edges = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+
+        arbitrary_edge = choice(edges)
+
+    def test_if_choices_works(self):
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        edges = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+
+        arbitrary_edges = choices(edges, k=5)
+
+
+    def test_if_random_sample_works(self):
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        edges = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+
+        arbitrary = sample(edges, k=10)
 
 
 if __name__ == '__main__':

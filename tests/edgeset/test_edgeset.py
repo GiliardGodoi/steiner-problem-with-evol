@@ -612,6 +612,28 @@ class TestEdgeSet(unittest.TestCase):
 
         self.assertEqual(len(result), 10)
 
+    def test_convert_to_set(self):
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        edges = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+
+        result = set(edges)
+
+        self.assertIsInstance(result, set)
+        self.assertEqual(len(result), 200)
+
+    def test_convert_to_list(self):
+        A = count(0, step=2)
+        B = count(1, step=2)
+
+        edges = EdgeSet(UEdge(next(A), next(B)) for _ in range(200))
+
+        result = list(edges)
+
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 200)
+
 
 if __name__ == '__main__':
     unittest.main()
